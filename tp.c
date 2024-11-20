@@ -1,5 +1,6 @@
 #include<stdio.h>
 #include<string.h>
+#include<stdlib.h>
 typedef struct  {
     char nom[10];
     char prenom[10];
@@ -11,146 +12,104 @@ typedef struct  {
     int code_postal;
 
    }adress;
-}Apprenant;
+}apprenant;
 
  //creer apprenant
- void creer\apprenant(){
+ void creerapprenant(apprenant * app){
     printf("entrer votre nom : ");
-    scanf("%s",&nom);
+    scanf("%s",app->nom);
     printf("entrer votre prenom : ");
-    scanf("%s", &prenom);
+    scanf("%s", app->prenom);
     printf("enter votre age : ");
-    scanf("%d",&age);
+    scanf("%d",&app->age);
     printf("entrer note : ");
-    scanf("%f",&note);
+    scanf("%f",&app->note);
     printf("entrer rue : ");
-    scanf("%s",&adress.rue);
+    scanf("%s",app->adress.rue);
     printf("entrer ville : ");
-    scanf("%s",&adress.ville);
+    scanf("%s",app->adress.ville);
     printf("entrer code_postal :");
-    scanf("%s",&adress.code_postal);
+    scanf("%d",&app->adress.code_postal);
 
  }
  //afficher apprenant
- void afficher_apprenant(){
-    printf("nom: %s\n",&nom);
-    printf("prenom: %s\n",&prenom);
-    printf("age: %d\n",&age);
-    printf("note: %2.f\n",&note);
-    printf("adress: %s,%s,(%d)\n",&adress.rue,&adress.ville,&adress.code_postal)
+ void afficher_apprenant(apprenant app){
+    printf("nom: %s\n",app.nom);
+    printf("prenom: %s\n",app.prenom);
+    printf("age: %d\n",app.age);
+    printf("note: %2.f\n",app.note);
+    printf("adress: %s,%s,(%d)\n",app.adress.rue,app.adress.ville,app.adress.code_postal);
  }
 //modifier apprenant
-void modifier_apprenant(){
+void modifier_apprenant(apprenant *app){
     printf("modifier apprenant :\n");
     printf("nouveau nom :\n");
-    scanf("%s",&nom);
+    scanf("%s",app->nom);
     printf("nouveau prenom :\n");
-    scanf("%s",&prenom);
+    scanf("%s",app->prenom);
     printf("modifier age :\n");
-    scanf("%d",&age);
+    scanf("%d",&app->age);
     printf("modifier note :\n");
-    scanf("%f",&note);
+    scanf("%f",&app->note);
     printf("modifier rue:\n");
-    scanf("%s",&adress.rue);
+    scanf("%s",app->adress.rue);
     printf("modifier ville :\n");
-    scanf("%s",&adress.ville);
+    scanf("%s",app->adress.ville);
     printf("modifier code_postal:\n");
-    scanf("%s",&adress.code_postal);
+    scanf("%d",&app->adress.code_postal);
 }
 //supprimer apprenant
-void supprimer_apprenant(){
-   free(apprenant);
-    
-
+void supprimer_apprenant(apprenant *apprenants, int taille, int a) {
+    if (a >= 0 && a < taille) {
+        for (int i= a; i < taille - 1; i++) {
+            apprenants[i] = apprenants[i + 1];
+        }
+        printf("Apprenant supprimé.\n");
+    } else {
+        printf("a invalide.\n");
+    }
 }
 int main(){
+int taille = 0, choix, a;
+    apprenant *apprenants = NULL;
 
-   int apprenant **apprenant = null;
-   int napprenant =0;
-   while(1){
-      printf("1. entrer le nom :\n");
-      printf("2. entrer prenom :\n");
-      printf("3. entrer age :\n");
-      printf("4. entrer note :\n");
-      printf("5. entrer adress :\n");
-      int choix;
-      scanf("%d",&choix);
-   }
-   switch(choix){
-case 1:
-                // Agrandir le tableau si nécessaire
-                apprenants = (Apprenant**)realloc(apprenants, (nbApprenants+1) * sizeof(Apprenant*));
-                apprenants[nbApprenants++] = creerApprenant();
+    while (1) {
+        printf("\nMenu:\n");
+        printf("1. Créer un apprenant\n");
+        printf("2. Afficher les apprenants\n");
+        printf("3. Modifier un apprenant\n");
+        printf("4. Supprimer un apprenant\n");
+        printf("5. Quitter\n");
+        printf("Votre choix : ");
+        scanf("%d", &choix);
+
+        switch (choix) {
+            case 1:
+                taille++;
+                apprenants = (apprenant*)realloc(apprenants, taille * sizeof(apprenant));
+                creerapprenant(&apprenants[taille - 1]);
                 break;
- case 2:
-                // Afficher tous les apprenants
-                for (int i = 0; i < nbApprenants; i++) {
-                    afficherApprenant(apprenants[i]);
+            case 2:
+                for (int i = 0; i < taille; i++) {
+                    afficher_apprenant(apprenants[i]);
                 }
                 break;
- case 3:
-            for{
-               if (nbApprenants == 0) {
-        printf("no apprenant à modifier.\n");
-    } else {
-        int i;
-        printf("Entrez i de l'apprenant à modifier (1-%d): ", nbApprenants);
-        scanf("%d", &i);
-            }
-            }
-             if (i< 1 || i > nbApprenants) {
-            printf("i invalide.\n");
-        } else {
-            Apprenant *apprenant = apprenants[i - 1];
-            printf("Entrez le nouveau nom : ");
-            scanf("%s", apprenant->nom);
-            printf("entrer le nouveau prenom :\n");
-            scanf("%s",apprenant->prenom);
-            printf("entrer nouveau age :\n ");
-            scanf("%d",apprenant->age);
-            printf("entrer nouveau note :\n");
-            scanf("%f",apprenant->note);
-            printf("modifier rue:\n");
-            scanf("%s",apprenant->adress.rue);
-            printf("modifier ville :\n");
-            scanf("%s",apprenant->adress.ville);
-             printf("modifier code_postal:\n");
-            scanf("%s",apprenant->adress.code_postal);
-            printf("Apprenant modifié avec succès.\n");
-        }break;
-
-case 4 :
-      if (napprenants == 0) {
-        printf("no apprenant à supprimer.\n");
-    } else {
-        int i;
-        printf("Entrez i de l'apprenant à supprimer (1-%d): ", nApprenants);
-        scanf("%d", &i);
-
-        if (i < 1 || i> nApprenants) {
-            printf("i invalide.\n");
-        } else {
-            supprimerApprenant(apprenants[i - 1]);
-            // Décaler les apprenants suivants
-            for (int a= i - 1; x < nApprenants - 1; a++) {
-                apprenants[a] = apprenants[a+ 1];
-            }
-            nApprenants--;
-            printf("Apprenant supprimé avec succès.\n");
-        }
-    }
-    break;
-    
-case 5:
-                // Libérer la mémoire et quitter
-                for (int i = 0; i < nApprenants; i++) {
-                    supprimerApprenant(apprenants[i]);
-                }
+            case 3:
+                printf("Entrez a de l'apprenant à modifier : ");
+                scanf("%d", &a);
+                modifier_apprenant(&apprenants[a - 1]);
+                break;
+            case 4:
+                printf("Entrez a de l'apprenant à supprimer : ");
+                scanf("%d", &a);
+                supprimer_apprenant(apprenants, taille, a - 1);
+                taille--;
+                break;
+            case 5:
                 free(apprenants);
                 return 0;
-   
+            default:
+                printf("Choix invalide.\n");
+        }
+    }
 }
-
-}
-
-
